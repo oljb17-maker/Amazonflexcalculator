@@ -673,20 +673,20 @@
             priceLabel: "Montant du bloc (USD) :",
             priceHint: "Montant total affiché dans Amazon Flex.",
             durationLabel: "Durée du bloc (heures) :",
-            durationHint: "Touchez la durée exacte affichée dans l’app.",
+            durationHint: "Touchez la durée exacte affichée dans l'app.",
             section2Title: "2. Miles (optionnel)",
             milesLabel: "Nombre total de miles du bloc :",
             milesHint:
                 "Tu peux simplement ajouter les miles à la fin du bloc, quand tu es libre. Tu peux inclure aller, tournée et retour.",
             section3Title: "3. Rechercher bornes de recharge proches",
             stationsIntro:
-                "Utilise ta position actuelle pour voir les bornes de recharge pour véhicules électriques proches. Nécessite une connexion internet et l’autorisation de localisation.",
+                "Utilise ta position actuelle pour voir les bornes de recharge pour véhicules électriques proches. Nécessite une connexion internet et l'autorisation de localisation.",
             findStationsButton: "Chercher des bornes près de moi",
             stationsPlaceholder:
                 "Ici tu verras des bornes de recharge proches une fois ta localisation obtenue.",
             locationLoading: "Récupération de ta localisation…",
             locationErrorGeneric:
-                "Impossible d’obtenir ta localisation. Vérifie les permissions de localisation du navigateur.",
+                "Impossible d'obtenir ta localisation. Vérifie les permissions de localisation du navigateur.",
             locationNotSupported:
                 "Ce navigateur ne supporte pas la géolocalisation.",
             stationsTitleList: "🔌 Bornes de recharge proches",
@@ -978,7 +978,7 @@
             stations.forEach(st => {
                 html += `
                     <div class="station-item">
-                        <strong>${st.name}</strong> — ${st.distance} mi<br>
+                        <strong>${st.name}</strong> -- ${st.distance} mi<br>
                         ${st.address}${st.city ? ", " + st.city : ""}<br>
                         Tipo: ${st.type}
                         ${st.connectors.length > 0 ? "<br>Conectores EV: " + st.connectors.join(", ") : ""}
