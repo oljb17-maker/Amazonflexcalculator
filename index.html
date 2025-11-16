@@ -366,7 +366,6 @@
            🧩 Ajustes para pantallas pequeñas
            ============================ */
 
-        /* Teléfonos MUY pequeños (tipo iPhone SE viejito, Android barato) */
         @media (max-width: 360px) {
             body {
                 padding: 8px;
@@ -408,7 +407,6 @@
             }
         }
 
-        /* Teléfonos normales (iPhone 11–16, Samsung, etc.) */
         @media (max-width: 430px) {
             body {
                 padding: 10px;
@@ -423,7 +421,6 @@
             }
         }
 
-        /* Tablets y pantallas grandes */
         @media (min-width: 768px) {
             body {
                 padding: 32px;
@@ -549,16 +546,17 @@
         </div>
     </section>
 
-    <!-- Sección 3: Estaciones cercanas -->
+    <!-- Sección 3: Cargadores eléctricos -->
     <section class="section">
         <div class="section-title" id="section3Title">
-            3. Buscar gas y cargadores cercanos
+            3. Buscar cargadores eléctricos cercanos
         </div>
         <p class="hint" id="stationsIntro">
-            Usa tu ubicación actual para ver estaciones cercanas. Requiere conexión a internet y permiso de ubicación.
+            Usa tu ubicación actual para ver cargadores eléctricos cercanos (EV).
+            Requiere conexión a internet y permiso de ubicación.
         </p>
         <button class="primary-btn" id="findStationsBtn">
-            Buscar cerca de mí
+            Buscar cargadores cerca de mí
         </button>
         <div id="stationsList" class="stations-list">
             <!-- Aquí se mostrarán resultados o mensajes -->
@@ -592,20 +590,20 @@
             milesLabel: "Total de millas del bloque:",
             milesHint:
                 "Incluye ida, ruta y regreso si quieres. Puedes agregar las millas al final del bloque, cuando estés libre.",
-            section3Title: "3. Buscar gas y cargadores cercanos",
+            section3Title: "3. Buscar cargadores eléctricos cercanos",
             stationsIntro:
-                "Usa tu ubicación actual para ver estaciones cercanas. Requiere conexión a internet y permiso de ubicación.",
-            findStationsButton: "Buscar cerca de mí",
+                "Usa tu ubicación actual para ver cargadores eléctricos cercanos (EV). Requiere conexión a internet y permiso de ubicación.",
+            findStationsButton: "Buscar cargadores cerca de mí",
             stationsPlaceholder:
-                "Aquí verás estaciones cercanas cuando se obtenga tu ubicación.",
+                "Aquí verás cargadores eléctricos cercanos cuando se obtenga tu ubicación.",
             locationLoading: "Obteniendo tu ubicación…",
             locationErrorGeneric:
                 "No se pudo obtener tu ubicación. Revisa permisos de ubicación en el navegador.",
             locationNotSupported:
                 "Este navegador no soporta geolocalización.",
-            stationsTitleList: "⛽🔌 Estaciones cercanas",
-            noStations: "No se encontraron estaciones cercanas en el radio seleccionado.",
-            errorStations: "Ocurrió un error al obtener las estaciones. Intenta de nuevo más tarde.",
+            stationsTitleList: "🔌 Cargadores cercanos",
+            noStations: "No se encontraron cargadores cercanos en el radio seleccionado.",
+            errorStations: "Ocurrió un error al obtener los cargadores. Intenta de nuevo más tarde.",
             resultsTitle: "Resultado del bloque",
             resultsChip: "Auto-cálculo",
             verdictExcellent: "🟢 Bloque excelente",
@@ -636,20 +634,20 @@
             milesLabel: "Total miles for the block:",
             milesHint:
                 "You can just add the miles at the end of the block, when you're free. Include drive, route and way back if you want.",
-            section3Title: "3. Find nearby gas & chargers",
+            section3Title: "3. Find nearby EV chargers",
             stationsIntro:
-                "Use your current location to see nearby stations. Requires internet connection and location permission.",
-            findStationsButton: "Search near me",
+                "Use your current location to see nearby electric vehicle chargers. Requires internet connection and location permission.",
+            findStationsButton: "Search chargers near me",
             stationsPlaceholder:
-                "Here you'll see nearby stations once your location is obtained.",
+                "Here you'll see nearby EV chargers once your location is obtained.",
             locationLoading: "Getting your location…",
             locationErrorGeneric:
                 "Could not get your location. Check browser location permissions.",
             locationNotSupported:
                 "This browser does not support geolocation.",
-            stationsTitleList: "⛽🔌 Nearby stations",
-            noStations: "No stations found within the selected radius.",
-            errorStations: "An error occurred while fetching stations. Please try again later.",
+            stationsTitleList: "🔌 Nearby EV chargers",
+            noStations: "No chargers found within the selected radius.",
+            errorStations: "An error occurred while fetching chargers. Please try again later.",
             resultsTitle: "Block result",
             resultsChip: "Auto-calculate",
             verdictExcellent: "🟢 Excellent block",
@@ -675,25 +673,25 @@
             priceLabel: "Montant du bloc (USD) :",
             priceHint: "Montant total affiché dans Amazon Flex.",
             durationLabel: "Durée du bloc (heures) :",
-            durationHint: "Touchez la durée exacte affichée dans l'app.",
+            durationHint: "Touchez la durée exacte affichée dans l’app.",
             section2Title: "2. Miles (optionnel)",
             milesLabel: "Nombre total de miles du bloc :",
             milesHint:
                 "Tu peux simplement ajouter les miles à la fin du bloc, quand tu es libre. Tu peux inclure aller, tournée et retour.",
-            section3Title: "3. Rechercher stations & bornes proches",
+            section3Title: "3. Rechercher bornes de recharge proches",
             stationsIntro:
-                "Utilise ta position actuelle pour voir les stations proches. Nécessite une connexion internet et l'autorisation de localisation.",
-            findStationsButton: "Chercher près de moi",
+                "Utilise ta position actuelle pour voir les bornes de recharge pour véhicules électriques proches. Nécessite une connexion internet et l’autorisation de localisation.",
+            findStationsButton: "Chercher des bornes près de moi",
             stationsPlaceholder:
-                "Ici tu verras des stations proches une fois ta localisation obtenue.",
+                "Ici tu verras des bornes de recharge proches une fois ta localisation obtenue.",
             locationLoading: "Récupération de ta localisation…",
             locationErrorGeneric:
-                "Impossible d'obtenir ta localisation. Vérifie les permissions de localisation du navigateur.",
+                "Impossible d’obtenir ta localisation. Vérifie les permissions de localisation du navigateur.",
             locationNotSupported:
                 "Ce navigateur ne supporte pas la géolocalisation.",
-            stationsTitleList: "⛽🔌 Stations proches",
-            noStations: "Aucune station trouvée dans le rayon sélectionné.",
-            errorStations: "Erreur lors de la récupération des stations. Réessaie plus tard.",
+            stationsTitleList: "🔌 Bornes de recharge proches",
+            noStations: "Aucune borne trouvée dans le rayon sélectionné.",
+            errorStations: "Erreur lors de la récupération des bornes. Réessaie plus tard.",
             resultsTitle: "Résultat du bloc",
             resultsChip: "Calcul auto",
             verdictExcellent: "🟢 Bloc excellent",
@@ -724,20 +722,20 @@
             milesLabel: "Total de milhas do bloco:",
             milesHint:
                 "Você pode adicionar as milhas só no final do bloco, quando estiver livre. Inclua ida, rota e volta, se quiser.",
-            section3Title: "3. Buscar postos e carregadores próximos",
+            section3Title: "3. Buscar carregadores elétricos próximos",
             stationsIntro:
-                "Use sua localização atual para ver postos próximos. Requer internet e permissão de localização.",
-            findStationsButton: "Buscar perto de mim",
+                "Use sua localização atual para ver carregadores de veículo elétrico próximos. Requer internet e permissão de localização.",
+            findStationsButton: "Buscar carregadores perto de mim",
             stationsPlaceholder:
-                "Aqui você verá postos próximos quando sua localização for obtida.",
+                "Aqui você verá carregadores elétricos próximos quando sua localização for obtida.",
             locationLoading: "Obtendo sua localização…",
             locationErrorGeneric:
                 "Não foi possível obter sua localização. Verifique as permissões de localização do navegador.",
             locationNotSupported:
                 "Este navegador não suporta geolocalização.",
-            stationsTitleList: "⛽🔌 Postos próximos",
-            noStations: "Nenhum posto encontrado dentro do raio selecionado.",
-            errorStations: "Erro ao obter os postos. Tente novamente mais tarde.",
+            stationsTitleList: "🔌 Carregadores próximos",
+            noStations: "Nenhum carregador encontrado dentro do raio selecionado.",
+            errorStations: "Erro ao obter os carregadores. Tente novamente mais tarde.",
             resultsTitle: "Resultado do bloco",
             resultsChip: "Cálculo automático",
             verdictExcellent: "🟢 Bloco excelente",
@@ -768,20 +766,20 @@
             milesLabel: "Всего миль за блок:",
             milesHint:
                 "Можешь просто внести мили в конце блока, когда освободишься. При желании включай путь до станции, маршрут и дорогу назад.",
-            section3Title: "3. Поиск заправок и зарядок рядом",
+            section3Title: "3. Поиск зарядных станций рядом",
             stationsIntro:
-                "Используй свою текущую геолокацию, чтобы увидеть ближайшие станции. Нужен интернет и доступ к геолокации.",
-            findStationsButton: "Найти рядом со мной",
+                "Используй свою текущую геолокацию, чтобы увидеть ближайшие зарядные станции для электромобилей. Нужен интернет и доступ к геолокации.",
+            findStationsButton: "Найти зарядки рядом со мной",
             stationsPlaceholder:
-                "Здесь появятся станции рядом, когда будет получена твоя геолокация.",
+                "Здесь появятся зарядные станции рядом, когда будет получена твоя геолокация.",
             locationLoading: "Получаем твою геолокацию…",
             locationErrorGeneric:
                 "Не удалось получить геолокацию. Проверь настройки доступа к местоположению в браузере.",
             locationNotSupported:
                 "Этот браузер не поддерживает геолокацию.",
-            stationsTitleList: "⛽🔌 Станции рядом",
-            noStations: "В выбранном радиусе станций не найдено.",
-            errorStations: "Ошибка при получении станций. Попробуй позже.",
+            stationsTitleList: "🔌 Зарядные станции рядом",
+            noStations: "В выбранном радиусе зарядок не найдено.",
+            errorStations: "Ошибка при получении списка зарядок. Попробуй позже.",
             resultsTitle: "Результат блока",
             resultsChip: "Авто-расчёт",
             verdictExcellent: "🟢 Отличный блок",
@@ -935,14 +933,14 @@
         );
     }
 
-    // 🔌 Llamada a la API de NREL (alt-fuel-stations)
+    // 🔌 Llamada a la API de NREL (alt-fuel-stations) – solo EV
     async function fetchNRELStations(lat, lon) {
         const API_KEY = "EKwD8YE3V9ulKI0vR15uwiMtLwm97T36t2vqatwq";
         const radius = 7; // millas alrededor de la ubicación
 
         const url =
             `https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json` +
-            `?api_key=${API_KEY}&latitude=${lat}&longitude=${lon}&radius=${radius}`;
+            `?api_key=${API_KEY}&latitude=${lat}&longitude=${lon}&radius=${radius}&fuel_type=ELEC`;
 
         const res = await fetch(url);
         const data = await res.json();
@@ -961,7 +959,6 @@
         }));
     }
 
-    // Muestra resultados en la sección de estaciones
     async function handleStationsSearch(lat, lon) {
         const t = translations[currentLang];
         const stationsList = document.getElementById("stationsList");
@@ -981,7 +978,7 @@
             stations.forEach(st => {
                 html += `
                     <div class="station-item">
-                        <strong>${st.name}</strong> -- ${st.distance} mi<br>
+                        <strong>${st.name}</strong> — ${st.distance} mi<br>
                         ${st.address}${st.city ? ", " + st.city : ""}<br>
                         Tipo: ${st.type}
                         ${st.connectors.length > 0 ? "<br>Conectores EV: " + st.connectors.join(", ") : ""}
