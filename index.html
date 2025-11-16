@@ -1,4 +1,4 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
@@ -298,6 +298,49 @@
             font-weight: 600;
         }
 
+        .primary-btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 999px;
+            border: none;
+            outline: none;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: linear-gradient(135deg, #38bdf8, #22c55e);
+            color: #020617;
+            cursor: pointer;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .primary-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+        }
+
+        .stations-list {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #9ca3af;
+            line-height: 1.4;
+        }
+
+        .stations-group-title {
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        .station-item {
+            margin-top: 5px;
+            font-size: 11px;
+            color: #cbd5f5;
+        }
+
         .foot {
             margin-top: 12px;
             text-align: center;
@@ -317,6 +360,79 @@
             font-size: 9px;
             color: #6b7280;
             margin-top: 2px;
+        }
+
+        /* ============================
+           🧩 Ajustes para pantallas pequeñas
+           ============================ */
+
+        /* Teléfonos MUY pequeños (tipo iPhone SE viejito, Android barato) */
+        @media (max-width: 360px) {
+            body {
+                padding: 8px;
+            }
+
+            .app-container {
+                padding: 14px 12px 12px;
+                border-radius: 14px;
+            }
+
+            .title {
+                font-size: 16px;
+            }
+
+            .subtitle {
+                font-size: 11px;
+            }
+
+            .hours-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+            }
+
+            .section,
+            .results-section {
+                padding: 10px 10px 11px;
+            }
+
+            .result-label {
+                font-size: 11px;
+            }
+
+            .result-value {
+                font-size: 14px;
+            }
+
+            .result-value.small {
+                font-size: 12px;
+            }
+        }
+
+        /* Teléfonos normales (iPhone 11–16, Samsung, etc.) */
+        @media (max-width: 430px) {
+            body {
+                padding: 10px;
+            }
+
+            .app-container {
+                padding: 16px 14px 14px;
+            }
+
+            .hours-grid {
+                gap: 7px;
+            }
+        }
+
+        /* Tablets y pantallas grandes */
+        @media (min-width: 768px) {
+            body {
+                padding: 32px;
+            }
+
+            .app-container {
+                max-width: 640px;
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
@@ -433,6 +549,22 @@
         </div>
     </section>
 
+    <!-- Sección 3: Estaciones cercanas -->
+    <section class="section">
+        <div class="section-title" id="section3Title">
+            3. Buscar gas y cargadores cercanos
+        </div>
+        <p class="hint" id="stationsIntro">
+            Usa tu ubicación actual para ver estaciones cercanas. Requiere conexión a internet y permiso de ubicación.
+        </p>
+        <button class="primary-btn" id="findStationsBtn">
+            Buscar cerca de mí
+        </button>
+        <div id="stationsList" class="stations-list">
+            <!-- Aquí se mostrarán resultados o mensajes -->
+        </div>
+    </section>
+
     <footer class="foot">
         <span>Powered by Ottoleox</span>
         <small id="footSubtitle">Hecho por un driver, para drivers.</small>
@@ -443,6 +575,7 @@
     const IRS_RATE = 0.68; // ejemplo, puede cambiar cada año
     let selectedHours = 2;
     let currentLang = "es";
+    let isSearchingStations = false;
 
     const translations = {
         es: {
@@ -459,6 +592,20 @@
             milesLabel: "Total de millas del bloque:",
             milesHint:
                 "Incluye ida, ruta y regreso si quieres. Puedes agregar las millas al final del bloque, cuando estés libre.",
+            section3Title: "3. Buscar gas y cargadores cercanos",
+            stationsIntro:
+                "Usa tu ubicación actual para ver estaciones cercanas. Requiere conexión a internet y permiso de ubicación.",
+            findStationsButton: "Buscar cerca de mí",
+            stationsPlaceholder:
+                "Aquí verás estaciones cercanas cuando se obtenga tu ubicación.",
+            locationLoading: "Obteniendo tu ubicación…",
+            locationErrorGeneric:
+                "No se pudo obtener tu ubicación. Revisa permisos de ubicación en el navegador.",
+            locationNotSupported:
+                "Este navegador no soporta geolocalización.",
+            stationsTitleList: "⛽🔌 Estaciones cercanas",
+            noStations: "No se encontraron estaciones cercanas en el radio seleccionado.",
+            errorStations: "Ocurrió un error al obtener las estaciones. Intenta de nuevo más tarde.",
             resultsTitle: "Resultado del bloque",
             resultsChip: "Auto-cálculo",
             verdictExcellent: "🟢 Bloque excelente",
@@ -489,6 +636,20 @@
             milesLabel: "Total miles for the block:",
             milesHint:
                 "You can just add the miles at the end of the block, when you're free. Include drive, route and way back if you want.",
+            section3Title: "3. Find nearby gas & chargers",
+            stationsIntro:
+                "Use your current location to see nearby stations. Requires internet connection and location permission.",
+            findStationsButton: "Search near me",
+            stationsPlaceholder:
+                "Here you'll see nearby stations once your location is obtained.",
+            locationLoading: "Getting your location…",
+            locationErrorGeneric:
+                "Could not get your location. Check browser location permissions.",
+            locationNotSupported:
+                "This browser does not support geolocation.",
+            stationsTitleList: "⛽🔌 Nearby stations",
+            noStations: "No stations found within the selected radius.",
+            errorStations: "An error occurred while fetching stations. Please try again later.",
             resultsTitle: "Block result",
             resultsChip: "Auto-calculate",
             verdictExcellent: "🟢 Excellent block",
@@ -514,11 +675,25 @@
             priceLabel: "Montant du bloc (USD) :",
             priceHint: "Montant total affiché dans Amazon Flex.",
             durationLabel: "Durée du bloc (heures) :",
-            durationHint: "Touchez la durée exacte affichée dans l’app.",
+            durationHint: "Touchez la durée exacte affichée dans l'app.",
             section2Title: "2. Miles (optionnel)",
             milesLabel: "Nombre total de miles du bloc :",
             milesHint:
                 "Tu peux simplement ajouter les miles à la fin du bloc, quand tu es libre. Tu peux inclure aller, tournée et retour.",
+            section3Title: "3. Rechercher stations & bornes proches",
+            stationsIntro:
+                "Utilise ta position actuelle pour voir les stations proches. Nécessite une connexion internet et l'autorisation de localisation.",
+            findStationsButton: "Chercher près de moi",
+            stationsPlaceholder:
+                "Ici tu verras des stations proches une fois ta localisation obtenue.",
+            locationLoading: "Récupération de ta localisation…",
+            locationErrorGeneric:
+                "Impossible d'obtenir ta localisation. Vérifie les permissions de localisation du navigateur.",
+            locationNotSupported:
+                "Ce navigateur ne supporte pas la géolocalisation.",
+            stationsTitleList: "⛽🔌 Stations proches",
+            noStations: "Aucune station trouvée dans le rayon sélectionné.",
+            errorStations: "Erreur lors de la récupération des stations. Réessaie plus tard.",
             resultsTitle: "Résultat du bloc",
             resultsChip: "Calcul auto",
             verdictExcellent: "🟢 Bloc excellent",
@@ -549,6 +724,20 @@
             milesLabel: "Total de milhas do bloco:",
             milesHint:
                 "Você pode adicionar as milhas só no final do bloco, quando estiver livre. Inclua ida, rota e volta, se quiser.",
+            section3Title: "3. Buscar postos e carregadores próximos",
+            stationsIntro:
+                "Use sua localização atual para ver postos próximos. Requer internet e permissão de localização.",
+            findStationsButton: "Buscar perto de mim",
+            stationsPlaceholder:
+                "Aqui você verá postos próximos quando sua localização for obtida.",
+            locationLoading: "Obtendo sua localização…",
+            locationErrorGeneric:
+                "Não foi possível obter sua localização. Verifique as permissões de localização do navegador.",
+            locationNotSupported:
+                "Este navegador não suporta geolocalização.",
+            stationsTitleList: "⛽🔌 Postos próximos",
+            noStations: "Nenhum posto encontrado dentro do raio selecionado.",
+            errorStations: "Erro ao obter os postos. Tente novamente mais tarde.",
             resultsTitle: "Resultado do bloco",
             resultsChip: "Cálculo automático",
             verdictExcellent: "🟢 Bloco excelente",
@@ -579,6 +768,20 @@
             milesLabel: "Всего миль за блок:",
             milesHint:
                 "Можешь просто внести мили в конце блока, когда освободишься. При желании включай путь до станции, маршрут и дорогу назад.",
+            section3Title: "3. Поиск заправок и зарядок рядом",
+            stationsIntro:
+                "Используй свою текущую геолокацию, чтобы увидеть ближайшие станции. Нужен интернет и доступ к геолокации.",
+            findStationsButton: "Найти рядом со мной",
+            stationsPlaceholder:
+                "Здесь появятся станции рядом, когда будет получена твоя геолокация.",
+            locationLoading: "Получаем твою геолокацию…",
+            locationErrorGeneric:
+                "Не удалось получить геолокацию. Проверь настройки доступа к местоположению в браузере.",
+            locationNotSupported:
+                "Этот браузер не поддерживает геолокацию.",
+            stationsTitleList: "⛽🔌 Станции рядом",
+            noStations: "В выбранном радиусе станций не найдено.",
+            errorStations: "Ошибка при получении станций. Попробуй позже.",
             resultsTitle: "Результат блока",
             resultsChip: "Авто-расчёт",
             verdictExcellent: "🟢 Отличный блок",
@@ -625,6 +828,13 @@
         document.getElementById("resultDetails").textContent = t.resultDetails;
         document.getElementById("noteText").textContent = t.noteText;
         document.getElementById("footSubtitle").textContent = t.footSubtitle;
+
+        document.getElementById("section3Title").textContent = t.section3Title;
+        document.getElementById("stationsIntro").textContent = t.stationsIntro;
+        document.getElementById("findStationsBtn").textContent = t.findStationsButton;
+
+        const stationsList = document.getElementById("stationsList");
+        stationsList.innerHTML = `<div class="hint">${t.stationsPlaceholder}</div>`;
 
         const hourOptions = document.querySelectorAll(".hour-option");
         t.hoursHints.forEach((hint, index) => {
@@ -699,6 +909,94 @@
         }
     }
 
+    function getUserLocation(onSuccess, onError) {
+        const t = translations[currentLang];
+
+        if (!navigator.geolocation) {
+            onError(t.locationNotSupported);
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                onSuccess({ lat, lon });
+            },
+            (err) => {
+                console.error(err);
+                onError(t.locationErrorGeneric);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 60000
+            }
+        );
+    }
+
+    // 🔌 Llamada a la API de NREL (alt-fuel-stations)
+    async function fetchNRELStations(lat, lon) {
+        const API_KEY = "EKwD8YE3V9ulKI0vR15uwiMtLwm97T36t2vqatwq";
+        const radius = 7; // millas alrededor de la ubicación
+
+        const url =
+            `https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json` +
+            `?api_key=${API_KEY}&latitude=${lat}&longitude=${lon}&radius=${radius}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!data.fuel_stations || data.fuel_stations.length === 0) {
+            return [];
+        }
+
+        return data.fuel_stations.map(st => ({
+            name: st.station_name || "Sin nombre",
+            address: st.street_address || "",
+            city: st.city || "",
+            distance: st.distance ? st.distance.toFixed(2) : "?",
+            type: st.fuel_type_code || "N/A",
+            connectors: st.ev_connector_types || []
+        }));
+    }
+
+    // Muestra resultados en la sección de estaciones
+    async function handleStationsSearch(lat, lon) {
+        const t = translations[currentLang];
+        const stationsList = document.getElementById("stationsList");
+
+        stationsList.innerHTML = `<div class="hint">${t.locationLoading}</div>`;
+
+        try {
+            const stations = await fetchNRELStations(lat, lon);
+
+            if (!stations.length) {
+                stationsList.innerHTML = `<div class="hint">${t.noStations}</div>`;
+                return;
+            }
+
+            let html = `<div class="stations-group-title">${t.stationsTitleList}</div>`;
+
+            stations.forEach(st => {
+                html += `
+                    <div class="station-item">
+                        <strong>${st.name}</strong> -- ${st.distance} mi<br>
+                        ${st.address}${st.city ? ", " + st.city : ""}<br>
+                        Tipo: ${st.type}
+                        ${st.connectors.length > 0 ? "<br>Conectores EV: " + st.connectors.join(", ") : ""}
+                    </div>
+                `;
+            });
+
+            stationsList.innerHTML = html;
+        } catch (e) {
+            console.error(e);
+            stationsList.innerHTML = `<div class="hint">${t.errorStations}</div>`;
+        }
+    }
+
+    // Eventos UI
     document.querySelectorAll(".hour-option").forEach((option) => {
         option.addEventListener("click", () => {
             document
@@ -724,6 +1022,28 @@
         });
     });
 
+    document.getElementById("findStationsBtn").addEventListener("click", () => {
+        const t = translations[currentLang];
+        const stationsList = document.getElementById("stationsList");
+
+        if (isSearchingStations) return;
+        isSearchingStations = true;
+
+        stationsList.innerHTML = `<div class="hint">${t.locationLoading}</div>`;
+
+        getUserLocation(
+            ({ lat, lon }) => {
+                isSearchingStations = false;
+                handleStationsSearch(lat, lon);
+            },
+            (msg) => {
+                isSearchingStations = false;
+                stationsList.innerHTML = `<div class="hint">${msg}</div>`;
+            }
+        );
+    });
+
+    // Valores iniciales
     document.getElementById("blockPrice").value = "98.00";
     document.getElementById("blockMiles").value = "60";
     selectedHours = 3.5;
