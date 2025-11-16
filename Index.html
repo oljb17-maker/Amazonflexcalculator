@@ -1,0 +1,737 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amazon Flex Block Helper</title>
+
+    <!-- Fuente bonita (si no hay internet usa la del sistema) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%);
+            color: #e5e7eb;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 520px;
+            background: linear-gradient(145deg, #020617, #020617, #111827);
+            border-radius: 18px;
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(148, 163, 184, 0.12);
+            padding: 20px 18px 18px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .title-block {
+            max-width: 75%;
+        }
+
+        .title {
+            font-size: 18px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #38bdf8;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .badge {
+            padding: 6px 10px;
+            border-radius: 14px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(31, 41, 55, 0.9);
+            color: #e5e7eb;
+            font-weight: 700;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            box-shadow: 0 0 14px rgba(15, 23, 42, 0.7);
+        }
+
+        .badge-good {
+            background: rgba(22, 163, 74, 0.2);
+            border-color: rgba(34, 197, 94, 0.9);
+            color: #4ade80;
+        }
+
+        .badge-okay {
+            background: rgba(234, 179, 8, 0.18);
+            border-color: rgba(234, 179, 8, 0.9);
+            color: #facc15;
+        }
+
+        .badge-bad {
+            background: rgba(185, 28, 28, 0.21);
+            border-color: rgba(248, 113, 113, 0.95);
+            color: #fecaca;
+        }
+
+        .lang-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .lang-tab {
+            flex: 1 1 18%;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 11px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            color: #9ca3af;
+            background: radial-gradient(circle at top, #020617, #020617);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-tab.active {
+            color: #0f172a;
+            border-color: transparent;
+            background: linear-gradient(135deg, #38bdf8, #22c55e);
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+            font-weight: 600;
+        }
+
+        .section {
+            margin-top: 14px;
+            padding: 12px 12px 14px;
+            border-radius: 12px;
+            background: radial-gradient(circle at top left, #111827, #020617);
+            border: 1px solid rgba(31, 41, 55, 0.9);
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #60a5fa;
+            margin-bottom: 8px;
+        }
+
+        .section-title span {
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        .field-group {
+            margin-top: 10px;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        label {
+            font-size: 12px;
+            color: #e5e7eb;
+            font-weight: 500;
+        }
+
+        .hint {
+            font-size: 10px;
+            color: #6b7280;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 11px;
+            border-radius: 10px;
+            border: 1px solid rgba(55, 65, 81, 0.9);
+            background: #020617;
+            color: #e5e7eb;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.18s ease;
+        }
+
+        input[type="number"]::placeholder {
+            color: #4b5563;
+        }
+
+        input[type="number"]:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .hour-option {
+            padding: 9px 0;
+            border-radius: 12px;
+            font-size: 13px;
+            text-align: center;
+            border: 1px solid rgba(55, 65, 81, 0.9);
+            color: #9ca3af;
+            background: radial-gradient(circle at top, #020617 0, #020617 50%, #020617 100%);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.18s ease;
+        }
+
+        .hour-option span {
+            font-size: 11px;
+            color: #4b5563;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .hour-option.active {
+            border-color: transparent;
+            color: #020617;
+            background: linear-gradient(135deg, #38bdf8, #22c55e);
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+        }
+
+        .results-section {
+            margin-top: 14px;
+            padding: 14px 12px;
+            border-radius: 12px;
+            background: radial-gradient(circle at top right, #020617, #020617 45%, #020617 100%);
+            border: 1px solid rgba(30, 64, 175, 0.9);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .results-title {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #60a5fa;
+        }
+
+        .results-chip {
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: rgba(31, 41, 55, 0.9);
+            color: #e5e7eb;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+
+        .result-label {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .result-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        .result-value.small {
+            font-size: 13px;
+            color: #a5b4fc;
+        }
+
+        .result-details {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed rgba(55, 65, 81, 0.8);
+            font-size: 11px;
+            color: #9ca3af;
+            line-height: 1.4;
+        }
+
+        .note {
+            margin-top: 10px;
+            font-size: 10px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .note strong {
+            color: #e5e7eb;
+            font-weight: 600;
+        }
+
+        .foot {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 10px;
+            color: #4b5563;
+        }
+
+        .foot span {
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #38bdf8;
+        }
+
+        .foot small {
+            display: block;
+            font-size: 9px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <header class="header">
+        <div class="title-block">
+            <div class="title" id="appTitle">Calculadora Amazon Flex</div>
+            <div class="subtitle" id="appSubtitle">
+                Estima el valor real de tus bloques por hora, milla y deducción.
+            </div>
+        </div>
+        <div class="badge" id="badgeLabel">Multi-idioma</div>
+    </header>
+
+    <!-- Pestañas de idioma -->
+    <div class="lang-tabs">
+        <button class="lang-tab active" data-lang="es">ES</button>
+        <button class="lang-tab" data-lang="en">EN</button>
+        <button class="lang-tab" data-lang="fr">FR</button>
+        <button class="lang-tab" data-lang="pt">PT</button>
+        <button class="lang-tab" data-lang="ru">RU</button>
+    </div>
+
+    <!-- Sección 1: Datos del bloque -->
+    <section class="section">
+        <div class="section-title" id="section1Title">
+            1. Datos del bloque
+        </div>
+
+        <div class="field-group">
+            <div class="label-row">
+                <label for="blockPrice" id="priceLabel">Valor del bloque (USD):</label>
+                <span class="hint" id="priceHint">Pago total que muestra Amazon Flex.</span>
+            </div>
+            <input type="number" id="blockPrice" step="0.01" min="0" placeholder="Ej: 98.00" />
+        </div>
+
+        <div class="field-group">
+            <div class="label-row">
+                <label id="durationLabel">Duración del bloque (horas):</label>
+                <span class="hint" id="durationHint">Toca la duración exacta que aparece en la app.</span>
+            </div>
+            <div class="hours-grid" id="hoursGrid">
+                <div class="hour-option active" data-hours="2">2 h <span>corto</span></div>
+                <div class="hour-option" data-hours="2.5">2.5 h <span>rápido</span></div>
+                <div class="hour-option" data-hours="3">3 h <span>estándar</span></div>
+                <div class="hour-option" data-hours="3.5">3.5 h <span>extendido</span></div>
+                <div class="hour-option" data-hours="4">4 h <span>largo</span></div>
+                <div class="hour-option" data-hours="4.5">4.5 h <span>extra</span></div>
+                <div class="hour-option" data-hours="5">5 h <span>full</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 2: Millas -->
+    <section class="section">
+        <div class="section-title" id="section2Title">
+            2. Millas (opcional)
+        </div>
+
+        <div class="field-group">
+            <div class="label-row">
+                <label for="blockMiles" id="milesLabel">Total de millas del bloque:</label>
+                <span class="hint" id="milesHint">
+                    Incluye ida, ruta y regreso si quieres. Puedes agregar las millas al final del bloque, cuando estés libre.
+                </span>
+            </div>
+            <input type="number" id="blockMiles" step="0.1" min="0" placeholder="Ej: 80" />
+        </div>
+    </section>
+
+    <!-- Resultados -->
+    <section class="results-section">
+        <div class="results-header">
+            <div class="results-title" id="resultsTitle">Resultado del bloque</div>
+            <div class="results-chip" id="resultsChip">Auto-cálculo</div>
+        </div>
+
+        <div class="result-row">
+            <div class="result-label" id="grossHourLabel">Pago bruto por hora:</div>
+            <div class="result-value" id="grossHourValue">$0.00/h</div>
+        </div>
+
+        <div class="result-row">
+            <div class="result-label" id="grossMileLabel">Pago bruto por milla:</div>
+            <div class="result-value" id="grossMileValue">$0.00/mi</div>
+        </div>
+
+        <div class="result-row">
+            <div class="result-label" id="deductionLabel">
+                Deducción estimada (0.68/mi):
+            </div>
+            <div class="result-value small" id="deductionValue">$0.00</div>
+        </div>
+
+        <div class="result-row">
+            <div class="result-label" id="taxableLabel">
+                Ingreso sujeto a impuestos aprox.:
+            </div>
+            <div class="result-value small" id="taxableValue">$0.00</div>
+        </div>
+
+        <div class="result-details" id="resultDetails">
+            Ingresa el valor del bloque y las horas. Si agregas millas, verás
+            cuánto podrías deducir usando 0.68 USD por milla (ejemplo).
+        </div>
+
+        <div class="note" id="noteText">
+            <strong>Importante:</strong> esto es una estimación educativa. La
+            tarifa por milla del IRS puede cambiar cada año. Usa una app para
+            registrar tus viajes (por ejemplo, Gridwise u otra app de millas)
+            para llevar un control real y hablar con tu asesor fiscal.
+        </div>
+    </section>
+
+    <footer class="foot">
+        <span>Powered by Ottoleox</span>
+        <small id="footSubtitle">Hecho por un driver, para drivers.</small>
+    </footer>
+</div>
+
+<script>
+    const IRS_RATE = 0.68; // ejemplo, puede cambiar cada año
+    let selectedHours = 2;
+    let currentLang = "es";
+
+    const translations = {
+        es: {
+            appTitle: "Calculadora Amazon Flex",
+            appSubtitle:
+                "Estima el valor real de tus bloques por hora, milla y deducción.",
+            badgeLabel: "Multi-idioma",
+            section1Title: "1. Datos del bloque",
+            priceLabel: "Valor del bloque (USD):",
+            priceHint: "Pago total que muestra Amazon Flex.",
+            durationLabel: "Duración del bloque (horas):",
+            durationHint: "Toca la duración exacta que aparece en la app.",
+            section2Title: "2. Millas (opcional)",
+            milesLabel: "Total de millas del bloque:",
+            milesHint:
+                "Incluye ida, ruta y regreso si quieres. Puedes agregar las millas al final del bloque, cuando estés libre.",
+            resultsTitle: "Resultado del bloque",
+            resultsChip: "Auto-cálculo",
+            verdictExcellent: "🟢 Bloque excelente",
+            verdictOkay: "🟡 Bloque aceptable",
+            verdictBad: "🔴 Bloque bajo",
+            grossHourLabel: "Pago bruto por hora:",
+            grossMileLabel: "Pago bruto por milla:",
+            deductionLabel: `Deducción estimada (${IRS_RATE.toFixed(2)}/mi):`,
+            taxableLabel: "Ingreso sujeto a impuestos aprox.:",
+            resultDetails:
+                "Ingresa el valor del bloque y las horas. Si agregas millas, verás cuánto podrías deducir usando 0.68 USD por milla (ejemplo).",
+            noteText:
+                "Importante: esto es una estimación educativa. La tarifa por milla del IRS puede cambiar cada año. Usa una app para registrar tus viajes (por ejemplo, Gridwise u otra app de millas) para llevar un control real y hablar con tu asesor fiscal.",
+            footSubtitle: "Hecho por un driver, para drivers.",
+            hoursHints: ["corto", "rápido", "estándar", "extendido", "largo", "extra", "full"]
+        },
+        en: {
+            appTitle: "Amazon Flex Block Calculator",
+            appSubtitle:
+                "Estimate your real block value per hour, per mile and tax deduction.",
+            badgeLabel: "Multi-language",
+            section1Title: "1. Block data",
+            priceLabel: "Block payout (USD):",
+            priceHint: "Total amount Amazon Flex shows for this block.",
+            durationLabel: "Block duration (hours):",
+            durationHint: "Tap the exact duration shown in the app.",
+            section2Title: "2. Miles (optional)",
+            milesLabel: "Total miles for the block:",
+            milesHint:
+                "You can just add the miles at the end of the block, when you're free. Include drive, route and way back if you want.",
+            resultsTitle: "Block result",
+            resultsChip: "Auto-calculate",
+            verdictExcellent: "🟢 Excellent block",
+            verdictOkay: "🟡 Okay block",
+            verdictBad: "🔴 Low-paying block",
+            grossHourLabel: "Gross pay per hour:",
+            grossMileLabel: "Gross pay per mile:",
+            deductionLabel: `Estimated deduction (${IRS_RATE.toFixed(2)}/mi):`,
+            taxableLabel: "Approx. taxable income:",
+            resultDetails:
+                "Enter payout and hours. If you add miles, you'll see an estimated deduction using 0.68 USD per mile as an example.",
+            noteText:
+                "Important: this is an educational estimate. The IRS mileage rate may change every year. Use a mileage tracking app (for example Gridwise or similar) to keep real records and talk to your tax professional.",
+            footSubtitle: "Made by a driver, for drivers.",
+            hoursHints: ["short", "fast", "standard", "extended", "long", "extra", "full"]
+        },
+        fr: {
+            appTitle: "Calculateur Amazon Flex",
+            appSubtitle:
+                "Estime la valeur réelle de tes blocs par heure, par mile et en déduction.",
+            badgeLabel: "Multi-langue",
+            section1Title: "1. Données du bloc",
+            priceLabel: "Montant du bloc (USD) :",
+            priceHint: "Montant total affiché dans Amazon Flex.",
+            durationLabel: "Durée du bloc (heures) :",
+            durationHint: "Touchez la durée exacte affichée dans l’app.",
+            section2Title: "2. Miles (optionnel)",
+            milesLabel: "Nombre total de miles du bloc :",
+            milesHint:
+                "Tu peux simplement ajouter les miles à la fin du bloc, quand tu es libre. Tu peux inclure aller, tournée et retour.",
+            resultsTitle: "Résultat du bloc",
+            resultsChip: "Calcul auto",
+            verdictExcellent: "🟢 Bloc excellent",
+            verdictOkay: "🟡 Bloc correct",
+            verdictBad: "🔴 Bloc faible",
+            grossHourLabel: "Paie brute par heure :",
+            grossMileLabel: "Paie brute par mile :",
+            deductionLabel: `Déduction estimée (${IRS_RATE.toFixed(2)}/mi) :`,
+            taxableLabel: "Revenu imposable approx. :",
+            resultDetails:
+                "Entre le montant du bloc et les heures. Si tu ajoutes les miles, tu verras une déduction estimée en utilisant 0,68 USD par mile comme exemple.",
+            noteText:
+                "Important : ceci est une estimation pédagogique. Le taux au mile peut changer chaque année. Utilise une application de suivi du kilométrage (par ex. Gridwise ou similaire) pour garder des preuves réelles et consulte ton conseiller fiscal.",
+            footSubtitle: "Créé par un driver, pour les drivers.",
+            hoursHints: ["court", "rapide", "standard", "prolongé", "long", "extra", "complet"]
+        },
+        pt: {
+            appTitle: "Calculadora Amazon Flex",
+            appSubtitle:
+                "Estime o valor real dos seus blocos por hora, por milha e dedução.",
+            badgeLabel: "Multi-idioma",
+            section1Title: "1. Dados do bloco",
+            priceLabel: "Valor do bloco (USD):",
+            priceHint: "Valor total que aparece no app da Amazon Flex.",
+            durationLabel: "Duração do bloco (horas):",
+            durationHint: "Toque na duração exata que aparece no app.",
+            section2Title: "2. Milhas (opcional)",
+            milesLabel: "Total de milhas do bloco:",
+            milesHint:
+                "Você pode adicionar as milhas só no final do bloco, quando estiver livre. Inclua ida, rota e volta, se quiser.",
+            resultsTitle: "Resultado do bloco",
+            resultsChip: "Cálculo automático",
+            verdictExcellent: "🟢 Bloco excelente",
+            verdictOkay: "🟡 Bloco razoável",
+            verdictBad: "🔴 Bloco fraco",
+            grossHourLabel: "Pagamento bruto por hora:",
+            grossMileLabel: "Pagamento bruto por milha:",
+            deductionLabel: `Dedução estimada (${IRS_RATE.toFixed(2)}/mi):`,
+            taxableLabel: "Renda tributável aprox.:",
+            resultDetails:
+                "Informe o valor do bloco e as horas. Se adicionar milhas, verá uma dedução estimada usando 0,68 USD por milha como exemplo.",
+            noteText:
+                "Importante: isto é apenas uma estimativa educativa. A taxa por milha do IRS pode mudar todo ano. Use um app de registro de milhas (por exemplo Gridwise ou similar) para manter um controle real e falar com seu contador.",
+            footSubtitle: "Feito por um driver, para drivers.",
+            hoursHints: ["curto", "rápido", "padrão", "estendido", "longo", "extra", "completo"]
+        },
+        ru: {
+            appTitle: "Калькулятор Amazon Flex",
+            appSubtitle:
+                "Оценивай реальную ценность блока по часу, по миле и по вычетам.",
+            badgeLabel: "Мультиязычный",
+            section1Title: "1. Данные блока",
+            priceLabel: "Оплата за блок (USD):",
+            priceHint: "Полная сумма, которую показывает Amazon Flex.",
+            durationLabel: "Длительность блока (часы):",
+            durationHint: "Нажми на точную длительность из приложения.",
+            section2Title: "2. Мили (по желанию)",
+            milesLabel: "Всего миль за блок:",
+            milesHint:
+                "Можешь просто внести мили в конце блока, когда освободишься. При желании включай путь до станции, маршрут и дорогу назад.",
+            resultsTitle: "Результат блока",
+            resultsChip: "Авто-расчёт",
+            verdictExcellent: "🟢 Отличный блок",
+            verdictOkay: "🟡 Нормальный блок",
+            verdictBad: "🔴 Слабый по оплате блок",
+            grossHourLabel: "Валовая оплата в час:",
+            grossMileLabel: "Валовая оплата за милю:",
+            deductionLabel: `Оценка вычета (${IRS_RATE.toFixed(2)}/mi):`,
+            taxableLabel: "Примерный облагаемый доход:",
+            resultDetails:
+                "Введи оплату и часы. Если добавить мили, увидишь примерную сумму вычета, используя 0.68 USD за милю как пример.",
+            noteText:
+                "Важно: это учебная оценка. Норма вычета за милю может меняться каждый год. Используй приложение для учёта пробега (например Gridwise или аналог) и консультируйся с налоговым специалистом.",
+            footSubtitle: "Создано драйвером для драйверов.",
+            hoursHints: ["короткий", "быстрый", "стандарт", "длинный", "очень длинный", "экстра", "полный"]
+        }
+    };
+
+    function applyTranslations(lang) {
+        const t = translations[lang];
+        if (!t) return;
+        currentLang = lang;
+
+        document.getElementById("appTitle").textContent = t.appTitle;
+        document.getElementById("appSubtitle").textContent = t.appSubtitle;
+        document.getElementById("badgeLabel").textContent = t.badgeLabel;
+
+        document.getElementById("section1Title").textContent = t.section1Title;
+        document.getElementById("priceLabel").textContent = t.priceLabel;
+        document.getElementById("priceHint").textContent = t.priceHint;
+        document.getElementById("durationLabel").textContent = t.durationLabel;
+        document.getElementById("durationHint").textContent = t.durationHint;
+
+        document.getElementById("section2Title").textContent = t.section2Title;
+        document.getElementById("milesLabel").textContent = t.milesLabel;
+        document.getElementById("milesHint").textContent = t.milesHint;
+
+        document.getElementById("resultsTitle").textContent = t.resultsTitle;
+        document.getElementById("grossHourLabel").textContent = t.grossHourLabel;
+        document.getElementById("grossMileLabel").textContent = t.grossMileLabel;
+        document.getElementById("deductionLabel").textContent = t.deductionLabel;
+        document.getElementById("taxableLabel").textContent = t.taxableLabel;
+
+        document.getElementById("resultDetails").textContent = t.resultDetails;
+        document.getElementById("noteText").textContent = t.noteText;
+        document.getElementById("footSubtitle").textContent = t.footSubtitle;
+
+        const hourOptions = document.querySelectorAll(".hour-option");
+        t.hoursHints.forEach((hint, index) => {
+            if (hourOptions[index]) {
+                const span = hourOptions[index].querySelector("span");
+                if (span) span.textContent = hint;
+            }
+        });
+
+        recalculate();
+    }
+
+    function updateVerdict(grossPerHour) {
+        const chip = document.getElementById("resultsChip");
+        const t = translations[currentLang];
+
+        chip.classList.remove("badge-good", "badge-okay", "badge-bad");
+
+        if (!grossPerHour || isNaN(grossPerHour)) {
+            chip.textContent = t.resultsChip;
+            return;
+        }
+
+        if (grossPerHour >= 30) {
+            chip.textContent = t.verdictExcellent;
+            chip.classList.add("badge-good");
+        } else if (grossPerHour >= 25) {
+            chip.textContent = t.verdictOkay;
+            chip.classList.add("badge-okay");
+        } else {
+            chip.textContent = t.verdictBad;
+            chip.classList.add("badge-bad");
+        }
+    }
+
+    function recalculate() {
+        const price = parseFloat(document.getElementById("blockPrice").value);
+        const miles = parseFloat(document.getElementById("blockMiles").value);
+
+        const grossHourValue = document.getElementById("grossHourValue");
+        const grossMileValue = document.getElementById("grossMileValue");
+        const deductionValue = document.getElementById("deductionValue");
+        const taxableValue = document.getElementById("taxableValue");
+
+        if (!price || price <= 0 || !selectedHours || selectedHours <= 0) {
+            grossHourValue.textContent = "$0.00/h";
+            grossMileValue.textContent = "$0.00/mi";
+            deductionValue.textContent = "$0.00";
+            taxableValue.textContent = "$0.00";
+            updateVerdict(NaN);
+            return;
+        }
+
+        const grossPerHour = price / selectedHours;
+        grossHourValue.textContent = `$${grossPerHour.toFixed(2)}/h`;
+
+        updateVerdict(grossPerHour);
+
+        if (miles && miles > 0) {
+            const grossPerMile = price / miles;
+            grossMileValue.textContent = `$${grossPerMile.toFixed(2)}/mi`;
+
+            const deduction = miles * IRS_RATE;
+            deductionValue.textContent = `$${deduction.toFixed(2)}`;
+
+            const taxable = Math.max(price - deduction, 0);
+            taxableValue.textContent = `$${taxable.toFixed(2)}`;
+        } else {
+            grossMileValue.textContent = "$0.00/mi";
+            deductionValue.textContent = "$0.00";
+            taxableValue.textContent = `$${price.toFixed(2)}`;
+        }
+    }
+
+    document.querySelectorAll(".hour-option").forEach((option) => {
+        option.addEventListener("click", () => {
+            document
+                .querySelectorAll(".hour-option")
+                .forEach((btn) => btn.classList.remove("active"));
+            option.classList.add("active");
+            selectedHours = parseFloat(option.getAttribute("data-hours"));
+            recalculate();
+        });
+    });
+
+    document.getElementById("blockPrice").addEventListener("input", recalculate);
+    document.getElementById("blockMiles").addEventListener("input", recalculate);
+
+    document.querySelectorAll(".lang-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+            document
+                .querySelectorAll(".lang-tab")
+                .forEach((btn) => btn.classList.remove("active"));
+            tab.classList.add("active");
+            const lang = tab.getAttribute("data-lang");
+            applyTranslations(lang);
+        });
+    });
+
+    document.getElementById("blockPrice").value = "98.00";
+    document.getElementById("blockMiles").value = "60";
+    selectedHours = 3.5;
+    document
+        .querySelector('.hour-option[data-hours="3.5"]')
+        .classList.add("active");
+
+    applyTranslations("es");
+</script>
+</body>
+</html>
