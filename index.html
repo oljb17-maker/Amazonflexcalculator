@@ -298,6 +298,26 @@
             font-weight: 600;
         }
 
+        .link-btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.7);
+            background: #020617;
+            color: #e5e7eb;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            cursor: pointer;
+            transition: background 0.15s, box-shadow 0.15s ease;
+        }
+        .link-btn:hover {
+            background: rgba(15,23,42,0.95);
+            box-shadow: 0 0 10px rgba(15,23,42,0.6);
+        }
+
         .foot {
             margin-top: 12px;
             text-align: center;
@@ -323,69 +343,35 @@
            🧩 Ajustes para pantallas pequeñas
            ============================ */
 
-        /* Teléfonos MUY pequeños (tipo iPhone SE viejito, Android barato) */
         @media (max-width: 360px) {
-            body {
-                padding: 8px;
-            }
-
+            body { padding: 8px; }
             .app-container {
                 padding: 14px 12px 12px;
                 border-radius: 14px;
             }
-
-            .title {
-                font-size: 16px;
-            }
-
-            .subtitle {
-                font-size: 11px;
-            }
-
+            .title { font-size: 16px; }
+            .subtitle { font-size: 11px; }
             .hours-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 6px;
             }
-
             .section,
             .results-section {
                 padding: 10px 10px 11px;
             }
-
-            .result-label {
-                font-size: 11px;
-            }
-
-            .result-value {
-                font-size: 14px;
-            }
-
-            .result-value.small {
-                font-size: 12px;
-            }
+            .result-label { font-size: 11px; }
+            .result-value { font-size: 14px; }
+            .result-value.small { font-size: 12px; }
         }
 
-        /* Teléfonos normales (iPhone 11–16, Samsung, etc.) */
         @media (max-width: 430px) {
-            body {
-                padding: 10px;
-            }
-
-            .app-container {
-                padding: 16px 14px 14px;
-            }
-
-            .hours-grid {
-                gap: 7px;
-            }
+            body { padding: 10px; }
+            .app-container { padding: 16px 14px 14px; }
+            .hours-grid { gap: 7px; }
         }
 
-        /* Tablets y pantallas grandes */
         @media (min-width: 768px) {
-            body {
-                padding: 32px;
-            }
-
+            body { padding: 32px; }
             .app-container {
                 max-width: 640px;
                 margin: 0 auto;
@@ -506,6 +492,11 @@
         </div>
     </section>
 
+    <!-- Botón para ver estimación de gasto en combustible -->
+    <button class="link-btn" id="fuelEstimatorBtn">
+        Ver estimación de gasto en combustible
+    </button>
+
     <footer class="foot">
         <span>Powered by Ottoleox</span>
         <small id="footSubtitle">Hecho por un driver, para drivers.</small>
@@ -546,6 +537,7 @@
             noteText:
                 "Importante: esto es una estimación educativa. La tarifa por milla del IRS puede cambiar cada año. Usa una app para registrar tus viajes (por ejemplo, Gridwise u otra app de millas) para llevar un control real y hablar con tu asesor fiscal.",
             footSubtitle: "Hecho por un driver, para drivers.",
+            fuelButton: "Ver estimación de gasto en combustible",
             hoursHints: ["corto", "rápido", "estándar", "extendido", "largo", "extra", "full"]
         },
         en: {
@@ -576,6 +568,7 @@
             noteText:
                 "Important: this is an educational estimate. The IRS mileage rate may change every year. Use a mileage tracking app (for example Gridwise or similar) to keep real records and talk to your tax professional.",
             footSubtitle: "Made by a driver, for drivers.",
+            fuelButton: "View fuel cost estimation",
             hoursHints: ["short", "fast", "standard", "extended", "long", "extra", "full"]
         },
         fr: {
@@ -604,8 +597,9 @@
             resultDetails:
                 "Entre le montant du bloc et les heures. Si tu ajoutes les miles, tu verras une déduction estimée en utilisant 0,68 USD par mile comme exemple.",
             noteText:
-                "Important : ceci est une estimination pédagogique. Le taux au mile peut changer chaque année. Utilise une application de suivi du kilométrage (par ex. Gridwise ou similaire) pour garder des preuves réelles et consulte ton conseiller fiscal.",
+                "Important : ceci est une estimation pédagogique. Le taux au mile peut changer chaque année. Utilise une application de suivi du kilométrage (par ex. Gridwise ou similaire) pour garder des preuves réelles et consulte ton conseiller fiscal.",
             footSubtitle: "Créé par un driver, pour les drivers.",
+            fuelButton: "Voir l’estimation du coût carburant",
             hoursHints: ["court", "rapide", "standard", "prolongé", "long", "extra", "complet"]
         },
         pt: {
@@ -636,6 +630,7 @@
             noteText:
                 "Importante: isto é apenas uma estimativa educativa. A taxa por milha do IRS pode mudar todo ano. Use um app de registro de milhas (por exemplo Gridwise ou similar) para manter um controle real e falar com seu contador.",
             footSubtitle: "Feito por um driver, para drivers.",
+            fuelButton: "Ver estimativa de gasto com combustível",
             hoursHints: ["curto", "rápido", "padrão", "estendido", "longo", "extra", "completo"]
         },
         ru: {
@@ -666,6 +661,7 @@
             noteText:
                 "Важно: это учебная оценка. Норма вычета за милю может меняться каждый год. Используй приложение для учёта пробега (например Gridwise или аналог) и консультируйся с налоговым специалистом.",
             footSubtitle: "Создано драйвером для драйверов.",
+            fuelButton: "Посмотреть оценку затрат на топливо",
             hoursHints: ["короткий", "быстрый", "стандарт", "длинный", "очень длинный", "экстра", "полный"]
         }
     };
@@ -698,6 +694,8 @@
         document.getElementById("resultDetails").textContent = t.resultDetails;
         document.getElementById("noteText").textContent = t.noteText;
         document.getElementById("footSubtitle").textContent = t.footSubtitle;
+
+        document.getElementById("fuelEstimatorBtn").textContent = t.fuelButton;
 
         const hourOptions = document.querySelectorAll(".hour-option");
         t.hoursHints.forEach((hint, index) => {
@@ -797,6 +795,12 @@
         });
     });
 
+    // Botón para ir al estimador de combustible (Kairoslab)
+    document.getElementById("fuelEstimatorBtn").addEventListener("click", () => {
+        window.location.href = "https://oljb17-maker.github.io/Kairoslab/";
+    });
+
+    // Valores iniciales
     document.getElementById("blockPrice").value = "98.00";
     document.getElementById("blockMiles").value = "60";
     selectedHours = 3.5;
